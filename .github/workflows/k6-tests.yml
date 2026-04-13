@@ -16,7 +16,7 @@ jobs:
         image: mysql:8
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: rgr_orgtechnics
+          MYSQL_DATABASE: laba3_db
         ports:
           - 3306:3306
         options: >-
@@ -35,22 +35,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Checkout RGR project
-        uses: actions/checkout@v4
-        with:
-          repository: andreiiihuzhov/rgr-orgtechnics
-          path: rgr-app
-
       - name: Build Spring Boot app
-        working-directory: rgr-app
+        working-directory: backend
         run: |
           chmod +x mvnw
           ./mvnw package -DskipTests -q
 
       - name: Start Spring Boot app
-        working-directory: rgr-app
+        working-directory: backend
         env:
-          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/rgr_orgtechnics
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/laba3_db
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: root
         run: |
